@@ -1,0 +1,44 @@
+<h3 mat-dialog-title>Modelo de Checklist</h3>
+<mat-divider class="withMarginBottom"></mat-divider>
+<form [formGroup]="form">
+    <div mat-dialog-content>
+        <div fxLayout fxLayoutGap="15px">
+            <input type="hidden" formControlName="id">
+            <mat-form-field>
+                <mat-label>Descrição</mat-label>
+                <input formControlName="description" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Tipo</mat-label>
+                <mat-select formControlName="checklistTypeId">
+                    <mat-option [value]="0">Selecione...</mat-option>
+                    <mat-option *ngFor="let item of dropdownChecklistTypeDataSource" [value]="item.id">
+                        {{item.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Ativo?</mat-label>
+                <mat-select formControlName="isActive">
+                    <mat-option [value]="0">Todos</mat-option>
+                    <mat-option value="1">Sim</mat-option>
+                    <mat-option value="2">Não</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <app-checklist-item [checklistItems]="items" [checklistIdentifier]="f.id.value" (sendData)="updateItems($event)"></app-checklist-item>
+    <div mat-dialog-actions align="end">
+        <button mat-raised-button *ngIf="this.data.action == 'create' || this.data.action == 'edit'" 
+        color="primary" type="button" (click)="onSaveModel()">
+            <mat-icon>save</mat-icon>
+            Salvar
+        </button>
+        <button mat-raised-button type="button" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            Fechar
+        </button>
+    </div>
+ {{f.id.value}}
+    <!-- {{this.form.value | json}} -->
+</form>

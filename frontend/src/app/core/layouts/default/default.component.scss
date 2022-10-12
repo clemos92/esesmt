@@ -1,0 +1,35 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.mat-drawer-container {
+    height: 100%;
+}
+mat-drawer-content {
+    padding: 15px !important;
+}
+
+.loading-container {
+    position:absolute;
+    z-index: 1001;
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
+}
+
+.spinner {
+    top: 50%;
+    left: 50%;
+}
+
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$primary: mat-palette($mat-gray, 900, 100, 700);
+
+.loading-container {
+    background-color: mat-color($primary);
+}

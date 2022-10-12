@@ -1,0 +1,4 @@
+{
+    "appService.deploySubpath": "dist\\GrievanceApp",
+    "appService.defaultWebAppToDeploy": "/subscriptions/4f3a3475-f736-43a2-9195-88ccfbd3db07/resourceGroups/BRAZU1VALERS056/providers/Microsoft.Web/sites/vale-grievance-dev"
+}

@@ -1,0 +1,23 @@
+<h3 mat-dialog-title style="text-align: center; font-weight: bold;">{{data.title}}</h3>
+<mat-divider class="withMarginBottom"></mat-divider>
+<div mat-dialog-content>
+    <p><b>De:</b> {{data.from}}</p>
+    <p><b>Para:</b> {{data.to}}</p>
+    <p><b>Assunto:</b> {{data.emailSubject}}</p>
+    <p><b>Data:</b> {{data.forwardingDate | date: 'dd/MM/yyyy HH:mm'}}</p>
+    <mat-divider class="withMarginBottom"></mat-divider>
+    <div *ngIf="isHTML();then html else text"></div>
+    <ng-template #html>
+        <div [innerHtml]="data.message | safeHtml"></div>
+    </ng-template>
+    <ng-template #text>
+        <div style="white-space: pre-wrap;">{{data.message.split('\\n').join('\n')}}</div>
+    </ng-template>
+</div>
+<mat-divider style="margin-top: 20px !important;"></mat-divider>
+<div mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+        Fechar
+    </button>
+</div>

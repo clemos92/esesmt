@@ -1,0 +1,10 @@
+<div fxLayout="row wrap" fxLayoutAlign="center" fxLayoutGap.xs="0">
+  <div fxFlex="50%" *ngFor="let item of shortcutMenus; index as i">
+    <mat-card [ngClass]="i%2!=0 ? 'firstColumn':'secondColumn'" (click)="navigate(item.link)" >
+      <div fxLayout="column" fxLayout="row" fxLayoutAlign="space-around center">
+        <div fxFlex="50%" fxFlex.gt-sm="25%"><mat-icon>{{item.icon}}</mat-icon></div>
+        <div fxFlex="50%" fxFlex.gt-sm="75%"><span>{{item.label}}</span></div>
+      </div>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "custom-theme.scss";
+
+@font-face {
+    font-family: myriad;
+    src: url(assets/fonts/Myriad-Pro-Light.otf);
+}
+
+html, 
+body { 
+    height: 100%; 
+    margin: 0;
+}
+
+mat-form-field.mat-form-field-should-float label {
+    // color:#585858 !important;
+    font-size: 18px;
+}
+
+h3.mat-dialog-title, .caption {
+    font-size: 15px;
+    text-transform: uppercase;
+}
+
+td.mat-column-noData {
+    font-size: 17px;
+    text-align: center;
+    height: 120px;
+}
+
+table.mat-table {
+    width: 100%;
+    table-layout: fixed;
+    margin-top: 10px;
+}
+
+.table-container {
+    margin-top: 15px !important;
+}
+
+th.mat-header-cell {
+    color: #585858;
+    font-size: 13px !important;
+    border-bottom: 2px solid #80bfbd;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+    padding-left: 0px !important;
+}
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+    padding-right: 0px !important;
+}
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+    padding-right: 15px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+tr.mat-header-row, tr.mat-footer-row, tr.mat-row {
+    height: 41px !important;
+}
+
+.hide{
+    display: none;
+}
+
+.withPaddingLeft {
+    padding-left: 15px !important;
+}
+
+.search-form-field{
+    width: 40%;
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+form > button{
+    top: -3px;
+}
+
+.mat-form-field {
+    margin-right: 16px;
+    width: calc(25% - 12px);
+}
+
+.withoutMarginRight {
+    margin-right: 0px !important;
+    width: calc(25% - 12px);
+}
+
+.withMarginBottom {
+    margin-bottom: 20px !important;
+}
+
+.bold {
+    font-weight: bold;
+}

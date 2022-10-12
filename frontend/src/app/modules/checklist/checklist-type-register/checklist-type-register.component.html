@@ -1,0 +1,34 @@
+<h3 mat-dialog-title>Tipo de Checklist</h3>
+<mat-divider class="withMarginBottom"></mat-divider>
+<form [formGroup]="form" (submit)="onSubmit()">
+    <div mat-dialog-content>
+        <div fxLayout fxLayoutGap="15px">
+            <input type="hidden" formControlName="id">
+            <mat-form-field>
+                <mat-label>Nome</mat-label>
+                <input formControlName="name" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Ativo?</mat-label>
+                <mat-select formControlName="isActive">
+                    <mat-option [value]="0">Todos</mat-option>
+                    <mat-option value="1">Sim</mat-option>
+                    <mat-option value="2">Não</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div mat-dialog-actions align="end">
+        <button mat-raised-button *ngIf="this.data.action == 'create' || this.data.action == 'edit'" 
+        color="primary" type="submit">
+            <mat-icon>save</mat-icon>
+            Salvar
+        </button>
+        <button mat-raised-button type="button" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            Fechar
+        </button>
+    </div>
+    {{form.value| json}}
+</form>

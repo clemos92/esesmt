@@ -1,0 +1,40 @@
+<h3 mat-dialog-title>Checklist</h3>
+<mat-divider class="withMarginBottom"></mat-divider>
+<form [formGroup]="form">
+    <div mat-dialog-content>
+        <div fxLayout fxLayoutGap="15px">
+            <input type="hidden" formControlName="id">
+            <div formArrayName="checklistItems" style="width: 100%;">
+                <div *ngFor="let item of formArrayItems.controls let i = index" [formGroupName]="i"
+                    style="margin-bottom: 15px;">
+                    <mat-label>{{ item.value.title }}</mat-label>
+                    <br />
+                    <mat-radio-group formControlName="status">
+                        <mat-radio-button checked="status" [value]="true" 
+                            (change)="configObservationValidator($event.value, item)">OK
+                        </mat-radio-button>
+                        <mat-radio-button checked="!status" [value]="false" 
+                            (change)="configObservationValidator($event.value, item)">NOK</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-form-field *ngIf="item.value.status == false">
+                        <mat-label>Observações</mat-label> 
+                        <input matInput formControlName="observation" />
+                    </mat-form-field>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div mat-dialog-actions align="end">
+        <button mat-raised-button color="primary" type="submit"
+            *ngIf="this.data.action == 'create'" [disabled]="this.form.invalid">
+            <mat-icon>save</mat-icon>
+            Salvar
+        </button>
+        <button mat-raised-button type="button" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+            Fechar
+        </button>
+    </div>
+</form>

@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ESESMT.Domain\ESESMT.Domain.csproj" />
+    <ProjectReference Include="..\ESESMT.Infra.CrossCutting\ESESMT.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\ESESMT.Infra.Data\ESESMT.Infra.Data.csproj" />
+  </ItemGroup>
+
+</Project>
