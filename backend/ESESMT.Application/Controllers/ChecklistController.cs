@@ -42,5 +42,21 @@ namespace ESESMT.Application.Controllers
             var resultPaged = _service.GetPagedByFilter(filter);
             return Ok(resultPaged);
         }
+
+
+        [HttpGet(nameof(GetAllActive))]
+        public IActionResult GetAllActive()
+        {
+            var activeEntities = _service.GetAllActive();
+            return Ok(activeEntities);
+        }
+
+        [HttpGet(nameof(GetByIdToDropdown) + "/{id}")]
+        public IActionResult GetByIdToDropdown([FromRoute] int id)
+        {
+            var entities = _service.GetByIdToDropdown(id);
+            return Ok(entities);
+        }
+        
     }
 }

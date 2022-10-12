@@ -12,6 +12,7 @@ namespace ESESMT.Application.AutoMapper.Profiles
             //evita criar um novo registro em Checklist
             CreateMap<ChecklistItemDto, ChecklistItem>()
                 .ForMember(p => p.Checklist, opt => opt.Ignore())
+                .ForMember(p => p.CompletedChecklistItems, opt => opt.Ignore())
                 .ForMember(p => p.Valid, opt => opt.Ignore())
                 .ForMember(p => p.ValidationResult, opt => opt.Ignore());
         }

@@ -27,7 +27,7 @@
             </mat-form-field>
         </div>
     </div>
-    <app-checklist-item [checklistItems]="items" [checklistIdentifier]="f.id.value" (sendData)="updateItems($event)"></app-checklist-item>
+    <app-checklist-item [checklistItems]="items" [action]="this.data.action" [checklistIdentifier]="f.id.value" (sendData)="updateItems($event)"></app-checklist-item>
     <div mat-dialog-actions align="end">
         <button mat-raised-button *ngIf="this.data.action == 'create' || this.data.action == 'edit'" 
         color="primary" type="button" (click)="onSaveModel()">
@@ -39,6 +39,4 @@
             Fechar
         </button>
     </div>
- {{f.id.value}}
-    <!-- {{this.form.value | json}} -->
 </form>

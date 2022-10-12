@@ -4,10 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Checklist } from 'src/app/shared/models/checklist';
+import { CompletedChecklist } from 'src/app/shared/models/completed-checklist';
 import { DropdownDefault } from 'src/app/shared/models/dropdown-default';
 import { ChecklistTypeService } from 'src/app/shared/services/checklist-type.service';
-import { ChecklistService } from 'src/app/shared/services/checklist.service';
+import { CompletedChecklistService } from 'src/app/shared/services/completed-checklist';
 import { ChecklistRegisterComponent } from '../checklist-register/checklist-register.component';
 
 @Component({
@@ -20,12 +20,12 @@ export class ChecklistListComponent implements OnInit {
   form: FormGroup;
   dropdownChecklistTypeDataSource: DropdownDefault[] = [];
   
-  dataSource = new MatTableDataSource<Checklist>();
+  dataSource = new MatTableDataSource<CompletedChecklist>();
   displayedColumns: string[] = [
     'actions',
-    'description',
-    'checklistTypeName'
-    // 'isActive'
+    'checklistDescription',
+    'checklistChecklistTypeName',
+    'creationDate'
   ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -38,20 +38,20 @@ export class ChecklistListComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private dataService: ChecklistService,
+    private dataService: CompletedChecklistService,
     private checklistTypeService: ChecklistTypeService,
     private dialog: MatDialog 
   ) {
     this.form = this.fb.group({
       description: new FormControl(null),
       checklistTypeId: new FormControl(null),      
-      isActive: new FormControl(null)
+      startDate: new FormControl(null),
+      endDate: new FormControl(null)
     });
   }
 
   ngOnInit(): void {
     this.getDropdowns();
-    this.form.get('isActive').setValue(0);
     this.loadData(null);    
   }
 
@@ -78,10 +78,6 @@ export class ChecklistListComponent implements OnInit {
   onViewDetails(dataRow) {
     this.openDialog('details', dataRow.id, false);
   }
-
-  onEdit(dataRow) {
-    this.openDialog('edit', dataRow.id);
-  }
   
   public add(){
     this.openDialog('create');
@@ -104,7 +100,8 @@ export class ChecklistListComponent implements OnInit {
     let filter = {
       description: this.f.description.value,
       checklistTypeId: this.f.checklistTypeId.value == 0 ? null : this.f.checklistTypeId.value,
-      isActive: this.f.isActive.value == 0 ? null : (this.f.isActive.value == '1' ? true : false),
+      startDate: this.f.startDate.value,
+      endDate: this.f.endDate.value,
       sortDirection: this.sort?.direction,
       pageIndex: this.paginator?.pageIndex,
       pageSize: this.paginator?.pageSize,
@@ -130,31 +127,4 @@ export class ChecklistListComponent implements OnInit {
     }
   }
 
-
-  // constructor(
-  //   private fb: FormBuilder,
-  //   private dialog: MatDialog ) { }
-
-  // ngOnInit(): void {
-  // }
-  
-  openChecklist(){
-    this.openDialog('create', 4, false);
-  }
-  
-  // openDialog(action: string, identifier: number = 0, refreshList: boolean = true){
-  //   let dialogRef = this.dialog.open(ChecklistRegisterComponent, {
-  //     width: '840px',
-  //     data: { 
-  //       id: identifier,
-  //       action: action 
-  //     }
-  //   });
-
-  //   if (refreshList) {
-  //     // dialogRef.componentInstance.sendData.subscribe(result => {
-  //     //   this.loadData(null);
-  //     // });
-  //   }
-  // }
 }

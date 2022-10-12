@@ -117,6 +117,7 @@ export class ChecklistModelListComponent implements OnInit {
   openDialog(action: string, identifier: number = 0, refreshList: boolean = true){
     let dialogRef = this.dialog.open(ChecklistModelRegisterComponent, {
       width: '840px',
+      maxHeight: '90%',
       data: { 
         id: identifier,
         action: action 

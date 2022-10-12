@@ -1,7 +1,7 @@
 <mat-card>
   <h3 mat-dialog-title>Tipo de Checklist</h3>
   <mat-card-content>
-    <form [formGroup]="form" (submit)="onSubmit()">
+    <form [formGroup]="form">
       <mat-form-field>
         <mat-label>Nome</mat-label>
         <input matInput formControlName="name">
@@ -14,7 +14,7 @@
           <mat-option value="2">Não</mat-option>
         </mat-select>
       </mat-form-field>
-      <button mat-raised-button type="submit" style="margin-right: 15px;">
+      <button mat-raised-button type="button" style="margin-right: 15px;" (click)="onSearch()">
         <mat-icon>search</mat-icon>
         Pesquisar
       </button>

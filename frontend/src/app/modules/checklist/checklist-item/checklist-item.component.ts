@@ -1,5 +1,5 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,11 +14,13 @@ export class ChecklistItemComponent implements AfterViewChecked {
 
   form: FormGroup;
 
-  @Input() public checklistItems: Array<ChecklistItem> = []; 
+  @Input() public checklistItems: Array<ChecklistItem> = [];
   @Input() public checklistIdentifier: number = 0;
+  @Input() public action: string;
 
   private previous: ChecklistItem;
-  
+  public isDisabled: boolean = false;
+
   @Output() public sendData = new EventEmitter();
 
   dataSource = new MatTableDataSource<ChecklistItem>();
@@ -31,44 +33,51 @@ export class ChecklistItemComponent implements AfterViewChecked {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private fb: FormBuilder, private cdRef:ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, private cdRef: ChangeDetectorRef) {
     this.form = this.fb.group({
       id: new FormControl(0),
-      name: new FormControl(null),
-      checklistId: new FormControl(this.checklistIdentifier),      
-      isActive: new FormControl(true)
+      name: [null, Validators.required],
+      checklistId: new FormControl(this.checklistIdentifier),
+      isActive: [true, Validators.required]
     });
   }
 
-  ngAfterViewInit() {    
+  ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  ngAfterViewChecked(){
-      this.form.patchValue({checklistId: this.checklistIdentifier});
-      this.loadData();
-      this.cdRef.detectChanges();
+  ngAfterViewChecked() {
+    if (this.action == 'details') {
+      this.form.controls.name.disable();
+      this.form.controls.isActive.disable();
+      this.isDisabled = true;
+    }
+    this.form.patchValue({ checklistId: this.checklistIdentifier });
+    this.loadData();
+    this.cdRef.detectChanges();
   }
 
   onSaveItem() {
-    this.sendData.emit( { nextValue: this.form.value, previousValue: this.previous });
+    this.sendData.emit({ nextValue: this.form.value, previousValue: this.previous });
     this.onClear();
   }
 
   get f() { return this.form.controls; }
 
   onEdit(dataRow) {
-    this.previous = dataRow;
-    this.form.setValue({
-      id: dataRow.id,
-      name: dataRow.name,
-      checklistId: dataRow.checklistId,
-      isActive: dataRow.isActive
-    });
+    if (!this.isDisabled) {
+      this.previous = dataRow;
+      this.form.setValue({
+        id: dataRow.id,
+        name: dataRow.name,
+        checklistId: dataRow.checklistId,
+        isActive: dataRow.isActive
+      });
+    }
   }
-  
-  public onClear(){
+
+  public onClear() {
     this.previous = null;
     this.form.setValue({
       id: 0,
@@ -81,5 +90,5 @@ export class ChecklistItemComponent implements AfterViewChecked {
   public loadData() {
     this.dataSource = new MatTableDataSource<any>(this.checklistItems);
   }
-  
+
 }

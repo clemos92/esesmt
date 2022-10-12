@@ -1,6 +1,6 @@
 <h3 mat-dialog-title>Tipo de Checklist</h3>
 <mat-divider class="withMarginBottom"></mat-divider>
-<form [formGroup]="form" (submit)="onSubmit()">
+<form [formGroup]="form">
     <div mat-dialog-content>
         <div fxLayout fxLayoutGap="15px">
             <input type="hidden" formControlName="id">
@@ -21,7 +21,7 @@
     <mat-divider></mat-divider>
     <div mat-dialog-actions align="end">
         <button mat-raised-button *ngIf="this.data.action == 'create' || this.data.action == 'edit'" 
-        color="primary" type="submit">
+        color="primary" type="button" (click)="onSave()">
             <mat-icon>save</mat-icon>
             Salvar
         </button>

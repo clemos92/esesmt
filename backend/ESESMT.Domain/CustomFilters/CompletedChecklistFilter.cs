@@ -5,9 +5,11 @@ using System.Text;
 
 namespace ESESMT.Domain.CustomFilters
 {
-    public class ChecklistFilter : BasePaginationFilter
+    public class CompletedChecklistFilter : BasePaginationFilter
     {
-        public DateTime? CreationDate { get; set; }
+        public string Description { get; set; }
         public int? ChecklistTypeId { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

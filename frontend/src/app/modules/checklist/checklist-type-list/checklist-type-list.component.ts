@@ -48,7 +48,7 @@ export class ChecklistTypeListComponent implements OnInit {
     this.loadData(null);    
   }
 
-  onSubmit(){
+  onSearch(){
     this.paginator.pageIndex = 0;
     this.paginator.pageSize = 10;
     this.sort.sort({ id: null, start: 'asc', disableClear: false });

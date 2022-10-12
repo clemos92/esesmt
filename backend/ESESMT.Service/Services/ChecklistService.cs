@@ -51,5 +51,22 @@ namespace ESESMT.Service.Services
             var mappedData = _mapper.Map<List<ChecklistListDto>>(listPaged.Data);
             return new PagedResponse<List<ChecklistListDto>>(mappedData, filter.PageIndex, filter.PageSize, listPaged.TotalRecords);
         }
+
+        public List<DropdownDefaultModel> GetAllActive()
+        {
+            var activeEntities = _repository.GetAllActive();
+            var resultMap = _mapper.Map<List<DropdownDefaultModel>>(activeEntities);
+
+            return resultMap;
+        }
+
+        public List<DropdownDefaultModel> GetByIdToDropdown(int id)
+        {
+            var entity = _repository.GetByIdToDropdown(id);
+            var resultMap = _mapper.Map<DropdownDefaultModel>(entity);
+
+            return new List<DropdownDefaultModel>() { resultMap };
+        }
+        
     }
 }

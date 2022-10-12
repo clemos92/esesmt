@@ -56,7 +56,7 @@ export class ChecklistTypeRegisterComponent implements OnInit {
     });
   }
 
-  public onSubmit() {
+  public onSave() {
     let formValue = this.form.value;
     formValue.isActive = formValue.isActive == '1' ? true : formValue.isActive == '2' ? false : null;
     

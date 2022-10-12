@@ -13,6 +13,8 @@ namespace ESESMT.Application.AutoMapper
                 cfg.AddProfile(new ChecklistTypeProfile());
                 cfg.AddProfile(new ChecklistProfile());
                 cfg.AddProfile(new ChecklistItemProfile());
+                cfg.AddProfile(new CompletedChecklistProfile());
+                cfg.AddProfile(new CompletedChecklistItemProfile());
             });
         }
     }

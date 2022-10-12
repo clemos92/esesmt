@@ -2,33 +2,44 @@
 <mat-divider class="withMarginBottom"></mat-divider>
 <form [formGroup]="form">
     <div mat-dialog-content>
-        <div fxLayout fxLayoutGap="15px">
-            <input type="hidden" formControlName="id">
-            <div formArrayName="checklistItems" style="width: 100%;">
-                <div *ngFor="let item of formArrayItems.controls let i = index" [formGroupName]="i"
-                    style="margin-bottom: 15px;">
-                    <mat-label>{{ item.value.title }}</mat-label>
-                    <br />
-                    <mat-radio-group formControlName="status">
-                        <mat-radio-button checked="status" [value]="true" 
-                            (change)="configObservationValidator($event.value, item)">OK
-                        </mat-radio-button>
-                        <mat-radio-button checked="!status" [value]="false" 
-                            (change)="configObservationValidator($event.value, item)">NOK</mat-radio-button>
-                    </mat-radio-group>
-                    <mat-form-field *ngIf="item.value.status == false">
-                        <mat-label>Observações</mat-label> 
-                        <input matInput formControlName="observation" />
-                    </mat-form-field>
-                </div>
+        <input type="hidden" formControlName="id">
+        <mat-form-field>
+            <mat-label>Checklist</mat-label>
+            <mat-select formControlName="checklistId" (selectionChange)="onSelectChecklist($event.value)">
+                <mat-option [value]="0">Selecione...</mat-option>
+                <mat-option *ngFor="let item of dropdownChecklistDataSource" [value]="item.id">
+                    {{item.value}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div formArrayName="completedChecklistItems" style="width: 100%;">
+            <div *ngFor="let item of formArrayItems.controls let i = index" [formGroupName]="i"
+                style="margin-bottom: 15px;">
+                <mat-label>{{ item.value.title }}</mat-label>
                 <br />
+                <mat-radio-group formControlName="status">
+                    <mat-radio-button checked="status" [value]="true"
+                        (change)="configObservationValidator($event.value, item)">OK
+                    </mat-radio-button>
+                    <mat-radio-button checked="!status" [value]="false"
+                        (change)="configObservationValidator($event.value, item)">NOK</mat-radio-button>
+                </mat-radio-group>
+                <mat-form-field *ngIf="item.value.status == false">
+                    <mat-label>Observações</mat-label>
+                    <input matInput formControlName="observation" />
+                </mat-form-field>
             </div>
+            <br />
         </div>
+        <mat-form-field style="width: 150px;" *ngIf="this.data.action == 'details'">
+            <mat-label>Criado em</mat-label>
+            <input matInput type="datetime-local" formControlName="creationDate">
+        </mat-form-field>
     </div>
     <mat-divider></mat-divider>
     <div mat-dialog-actions align="end">
-        <button mat-raised-button color="primary" type="submit"
-            *ngIf="this.data.action == 'create'" [disabled]="this.form.invalid">
+        <button mat-raised-button color="primary" type="button" *ngIf="this.data.action == 'create'"
+            [disabled]="this.form.invalid" (click)="onSave()">
             <mat-icon>save</mat-icon>
             Salvar
         </button>

@@ -8,4 +8,8 @@
     <ProjectReference Include="..\ESESMT.Infra.Shared\ESESMT.Infra.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ValueTypes\" />
+  </ItemGroup>
+
 </Project>

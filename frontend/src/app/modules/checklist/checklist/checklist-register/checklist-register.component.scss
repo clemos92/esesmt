@@ -9,3 +9,10 @@ mat-form-field {
 mat-radio-button {
     margin-right: 15px;
 }
+
+::ng-deep .cdk-overlay-pane { max-width: 90vw !important; max-height: 90vh; }
+::ng-deep .cdk-overlay-pane .mat-dialog-container{
+  max-width: 90vw;
+  max-height: 90vh;
+}
+::ng-deep .cdk-overlay-pane .mat-dialog-container .mat-dialog-content { max-height: 100%; }

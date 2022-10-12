@@ -57,5 +57,15 @@ namespace ESESMT.Infra.Data.Repository
             _dbContext.SaveChanges();
  
         }
+
+        public List<Checklist> GetAllActive()
+        {
+            return _dbContext.Checklists.AsNoTracking().Where(e => e.IsActive).ToList();
+        }
+
+        public Checklist GetByIdToDropdown(int id)
+        {
+            return _dbContext.Checklists.AsNoTracking().Where(e => e.Id == id).FirstOrDefault();
+        }        
     }
 }

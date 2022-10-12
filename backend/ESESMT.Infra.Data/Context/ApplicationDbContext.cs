@@ -16,6 +16,8 @@ namespace ESESMT.Infra.Data.Context
         public DbSet<ChecklistType> ChecklistTypes { get; set; }
         public DbSet<Checklist> Checklists { get; set; }
         public DbSet<ChecklistItem> ChecklistItems { get; set; }
+        public DbSet<CompletedChecklist> CompletedChecklists { get; set; }
+        public DbSet<CompletedChecklistItem> CompletedChecklistItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +26,8 @@ namespace ESESMT.Infra.Data.Context
             modelBuilder.Entity<ChecklistType>(new ChecklistTypeMap().Configure);
             modelBuilder.Entity<Checklist>(new ChecklistMap().Configure);
             modelBuilder.Entity<ChecklistItem>(new ChecklistItemMap().Configure);
+            modelBuilder.Entity<CompletedChecklist>(new CompletedChecklistMap().Configure);
+            modelBuilder.Entity<CompletedChecklistItem>(new CompletedChecklistItemMap().Configure);
 
             var entites = Assembly
                 .Load("ESESMT.Domain")

@@ -11,7 +11,7 @@ namespace ESESMT.Domain.Entities
         public int ChecklistTypeId { get; set; }
 
         public ChecklistType ChecklistType { get; set; }
-
         public ICollection<ChecklistItem> ChecklistItems { get; set; }
+        public ICollection<CompletedChecklist> CompletedChecklists { get; set; }
     }
 }

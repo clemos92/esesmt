@@ -1,11 +1,12 @@
-import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SnackbarServiceService } from 'src/app/core/services/snackbar-service.service';
 import { SnackType } from 'src/app/shared/components/snackbar/snackbar.component';
-import { Checklist } from 'src/app/shared/models/checklist';
-import { FormField } from 'src/app/shared/models/form-field';
+import { CompletedChecklistItem } from 'src/app/shared/models/completed-checklist-item';
+import { DropdownDefault } from 'src/app/shared/models/dropdown-default';
+import { ChecklistService } from 'src/app/shared/services/checklist.service';
+import { CompletedChecklistService } from 'src/app/shared/services/completed-checklist';
 
 
 @Component({
@@ -16,52 +17,86 @@ import { FormField } from 'src/app/shared/models/form-field';
 export class ChecklistRegisterComponent implements OnInit {
 
   @Output() public sendData = new EventEmitter();
-  
-  public checklistModel: Checklist = {
-    id: 4,
-    description: 'Luna',
-    checklistTypeId: 4,
-    checklistTypeName: 'Carlos Lemos',
-    checklistItems: [{
-      id: 2,
-      checklistId: 4,
-      name: 'dfdf 555 dddd',
-      isActive: true
-    },
-    {
-      id: 3,
-      checklistId: 4,
-      name: 'dfdafd',
-      isActive: true
-    },
-    {
-      id: 4,
-      checklistId: 4,
-      name: 'dafdfdsa ss',
-      isActive: true
-    }]
-  };
 
   form: FormGroup;
+  dropdownChecklistDataSource: DropdownDefault[] = [];
 
   constructor(private fb: FormBuilder,
     private dialogRef: MatDialogRef<ChecklistRegisterComponent>,
-    private httpClient: HttpClient, 
-    private cdRef:ChangeDetectorRef,
+    private dataService: CompletedChecklistService,
+    private cdRef: ChangeDetectorRef,
     private snack: SnackbarServiceService,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.form = new FormGroup({
-      id: new FormControl(4),
-      checklistItems: this.fb.array([])
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private checklistService: ChecklistService) {
+    this.form = this.fb.group({
+      id: new FormControl(0),
+      creationDate: new FormControl({ value: null, disabled: this.data.action == 'details' }),
+      checklistId: new FormControl({ value: 0, disabled: this.data.action == 'details' }),
+      completedChecklistItems: this.fb.array([])
     });
   }
 
   ngOnInit() {
-    this.httpClient.get<FormField[]>("/assets/form.json").subscribe((formFields) => {
-      for (const formField of formFields) {
-        this.addFormField(formField);
+    if (this.data.action == 'details') {
+      this.getDetails(this.data.id);
+    }
+    else if (this.data.action == 'create') {
+      this.getDropdowns();
+    }
+  }
+
+  private getDetails(id) {
+    this.dataService.getDetails(id).subscribe(data => {
+      this.getDropdowns(data.checklistId);
+
+      this.form.patchValue({
+        id: data.id,
+        checklistId: data.checklistId,
+        creationDate: data.creationDate
+      });
+
+      for (const item of data.completedChecklistItems) {
+        this.addFormField(item);
       }
     });
+  }
+
+  onSelectChecklist(checklistId: number) {
+    this.formArrayItems.clear();
+
+    if (checklistId != 0) {
+      this.checklistService.getDetails(checklistId).subscribe((checklist) => {
+        this.form.patchValue({
+          checklistId: checklist.id
+        });
+
+        for (const checklistItem of checklist.checklistItems) {
+          let completedChecklistItem = new CompletedChecklistItem();
+          completedChecklistItem.id = 0;
+          completedChecklistItem.completedChecklistId = 0;
+          completedChecklistItem.checklistItemId = checklistItem.id;
+          completedChecklistItem.checklistItemName = checklistItem.name;
+          completedChecklistItem.observation = null;
+          completedChecklistItem.status = true;
+
+          this.addFormField(completedChecklistItem);
+        }
+      });
+    }
+  }
+
+  getDropdowns(id: number = 0) {
+    if (id != 0) {
+      this.checklistService.getByIdToDropdown(id).subscribe(res => {
+        this.dropdownChecklistDataSource = res;
+      })
+    }
+    else {
+      this.checklistService.getAllActiveToDropdown().subscribe(res => {
+        this.dropdownChecklistDataSource = res;
+      })
+    }
+    this.form.get('checklistId').setValue(0);
   }
 
   ngAfterViewChecked() {
@@ -79,23 +114,24 @@ export class ChecklistRegisterComponent implements OnInit {
   }
 
   get formArrayItems() {
-    return this.form.get('checklistItems') as FormArray;
+    return this.form.get('completedChecklistItems') as FormArray;
   }
 
-  addFormField(formField: FormField) {
-    const checklistItems = this.formArrayItems;
+  addFormField(completedChecklistItem: CompletedChecklistItem) {
     let formGroup = this.fb.group({
-      id: [formField.id],
-      title: [formField.title],
-      observation: [formField.observation],
-      status: [formField.status]
+      id: new FormControl({ value: completedChecklistItem.id, disabled: this.data.action == 'details' }),
+      completedChecklistItemId: new FormControl({ value: completedChecklistItem.completedChecklistId, disabled: this.data.action == 'details' }),
+      checklistItemId: new FormControl({ value: completedChecklistItem.checklistItemId, disabled: this.data.action == 'details' }),
+      title: new FormControl({ value: completedChecklistItem.checklistItemName, disabled: this.data.action == 'details' }),
+      observation: new FormControl({ value: completedChecklistItem.observation, disabled: this.data.action == 'details' }),
+      status: new FormControl({ value: completedChecklistItem.status, disabled: this.data.action == 'details' })
     });
-    checklistItems.push(formGroup);
+    this.formArrayItems.push(formGroup);
 
-    this.configObservationValidator(formField.status, formGroup);
+    this.configObservationValidator(completedChecklistItem.status, formGroup);
   }
 
-  configObservationValidator(eventValue: boolean, item: FormGroup){
+  configObservationValidator(eventValue: boolean, item: FormGroup) {
     if (eventValue) {
       item.controls.observation.setValue(null);
       item.controls.observation.clearValidators();
@@ -110,5 +146,14 @@ export class ChecklistRegisterComponent implements OnInit {
     this.sendData.emit(data);
     this.snack.openSnackBar('Operação realizada com sucesso.', '', SnackType.Success);
     this.onClose();
+  }
+
+  public onSave() {
+    console.log(this.form.value);
+    if(this.data.action == 'create'){
+      this.dataService.create(this.form.value).subscribe(data=>{
+        this.onSubmitCompletedWithSuccess(data);
+      });
+    }
   }
 }

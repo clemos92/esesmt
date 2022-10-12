@@ -26,18 +26,21 @@ namespace ESESMT.Application
         {
             services.AddScoped<IChecklistTypeService, ChecklistTypeService>();
             services.AddScoped<IChecklistService, ChecklistService>();
+            services.AddScoped<ICompletedChecklistService, CompletedChecklistService>();
         }
 
         private static void AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IChecklistTypeRepository, ChecklistTypeRepository>();
             services.AddScoped<IChecklistRepository, ChecklistRepository>();
+            services.AddScoped<ICompletedChecklistRepository, CompletedChecklistRepository>();
         }
 
         private static void AddValidators(this IServiceCollection services)
         {
             services.AddScoped<ChecklistTypeValidator>();
             services.AddScoped<ChecklistValidator>();
+            services.AddScoped<CompletedChecklistValidator>();
         }
     }
 }

@@ -13,5 +13,7 @@ namespace ESESMT.Domain.Interfaces
         void Update(ChecklistRegisterDto obj);
         ChecklistRegisterDto GetDetails(int id);
         PagedResponse<List<ChecklistListDto>> GetPagedByFilter(ChecklistFilter filter);
+        List<DropdownDefaultModel> GetAllActive();
+        List<DropdownDefaultModel> GetByIdToDropdown(int id);
     }
 }
