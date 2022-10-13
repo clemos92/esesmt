@@ -81,7 +81,10 @@ namespace ESESMT.Infra.Data.Repository
 
         public CompletedChecklist GetDetails(int id)
         {
-            var query = base.GetQuery().Include(e => e.CompletedChecklistItems);
+            var query = base.GetQuery()
+                .Include(e => e.CompletedChecklistItems)
+                .ThenInclude(x=>x.ChecklistItem);
+
             return query.FirstOrDefault(e => e.Id == id);
         }
 

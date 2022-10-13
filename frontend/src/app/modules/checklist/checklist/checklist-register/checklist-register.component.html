@@ -13,11 +13,10 @@
             </mat-select>
         </mat-form-field>
         <div formArrayName="completedChecklistItems" style="width: 100%;">
-            <div *ngFor="let item of formArrayItems.controls let i = index" [formGroupName]="i"
-                style="margin-bottom: 15px;">
+            <div *ngFor="let item of formArrayItems.controls let i = index" [formGroupName]="i" style="margin-bottom: 10px;">
                 <mat-label>{{ item.value.title }}</mat-label>
-                <br />
-                <mat-radio-group formControlName="status">
+                <br/>
+                <mat-radio-group formControlName="status" style="margin-bottom: 0;">
                     <mat-radio-button checked="status" [value]="true"
                         (change)="configObservationValidator($event.value, item)">OK
                     </mat-radio-button>
@@ -29,7 +28,6 @@
                     <input matInput formControlName="observation" />
                 </mat-form-field>
             </div>
-            <br />
         </div>
         <mat-form-field style="width: 150px;" *ngIf="this.data.action == 'details'">
             <mat-label>Criado em</mat-label>

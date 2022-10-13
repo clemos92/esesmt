@@ -10,5 +10,6 @@ namespace ESESMT.Domain.Models
         public string Observation { get; set; }
         public int CompletedChecklistId { get; set; }
         public int ChecklistItemId { get; set; }
+        public string ChecklistItemName { get; set; }
     }
 }
