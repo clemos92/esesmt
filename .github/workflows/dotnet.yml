@@ -25,11 +25,11 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       
     - name: Publish
-      run: dotnet publish -c Release -o '${{ github.workspace }}/backend/out'
+      run: dotnet publish -c Release -o '${{ github.workspace }}/backend/ESESMT.Application/out'
     - name: Zip Package
       run: |
-        cd ${{ github.workspace }}/backend/out 
-        zip -r ${{ github.workspace }}/backend/out.zip *
+        cd ${{ github.workspace }}/backend/ESESMT.Application/out 
+        zip -r ${{ github.workspace }}/backend/ESESMT.Application/out.zip *
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v13
       with:
@@ -40,4 +40,4 @@ jobs:
         region: us-east-2
         version_label: ${{ github.run_id }}
         version_description: ${{ github.sha }}
-        deployment_package: ${{ github.workspace }}/backend/out.zip
+        deployment_package: ${{ github.workspace }}/backend/ESESMT.Application/out.zip
