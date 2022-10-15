@@ -19,11 +19,6 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 3.1.x
-        
-    - name: List files in the repository
-      run: |
-        ls -a      
-      
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -32,11 +27,11 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       
     - name: Publish
-      run: dotnet publish -c Release -o '${{ github.workspace }}/backend/out'
+      run: dotnet publish -c Release -o '${{ github.workspace }}/out'
     - name: Zip Package
       run: |
-        cd ${{ github.workspace }}/backend/out 
-        zip -r ${{ github.workspace }}/backend/out.zip *
+        cd ${{ github.workspace }}/out 
+        zip -r ${{ github.workspace }}/out.zip *
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v13
       with:
@@ -47,4 +42,4 @@ jobs:
         region: us-east-2
         version_label: ${{ github.run_id }}
         version_description: ${{ github.sha }}
-        deployment_package: ${{ github.workspace }}/backend/out.zip
+        deployment_package: ${{ github.workspace }}/out.zip
