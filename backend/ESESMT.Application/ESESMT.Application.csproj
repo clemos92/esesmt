@@ -27,5 +27,11 @@
     <ProjectReference Include="..\ESESMT.Service\ESESMT.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>
