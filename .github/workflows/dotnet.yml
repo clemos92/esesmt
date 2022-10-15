@@ -19,7 +19,7 @@ jobs:
         dotnet-version: 3.1.x
         
     - name: Entra no backend
-      run: cd '${{ github.workspace }}/backend/ESESMT.Application'
+      run: cd '${{ github.workspace }}/backend/ESESMT.Application/'
       
     - name: Restore dependencies
       run: dotnet restore
