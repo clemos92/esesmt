@@ -18,6 +18,9 @@ jobs:
       with:
         dotnet-version: 3.1.x
         
+    - name: List files in the repository
+      run: |
+        ls ${{ github.workspace }}
     - name: Entra no backend
       run: cd 'backend'
       
