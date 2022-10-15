@@ -24,6 +24,11 @@ jobs:
     - name: Entra no backend
       run: cd 'backend'
       
+      
+    - name: List files in the backend
+      run: |
+        ls ${{ github.workspace }}
+        
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
