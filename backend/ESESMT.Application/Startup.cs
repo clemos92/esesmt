@@ -48,7 +48,7 @@ namespace ESESMT.Application
             });
 
             AddCors(services);
-            AddSqlServerDependency(services);
+            AddMySqlDependency(services);
             AddAutoMapperDependency(services);
 
             services.AddNativeDependencies();
@@ -105,13 +105,9 @@ namespace ESESMT.Application
             services.AddAutoMapper(typeof(Startup));
         }
 
-        private void AddSqlServerDependency(IServiceCollection services)
+        private void AddMySqlDependency(IServiceCollection services)
         {
-#if DEBUG
-            var connectionString = Configuration["ConnectionStrings:database:mysql:connectionString-dev"];
-#else
-            var connectionString = Configuration["ConnectionStrings:database:mysql:connectionString-dev"];
-#endif
+            var connectionString = Configuration.GetConnectionString("default");
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
