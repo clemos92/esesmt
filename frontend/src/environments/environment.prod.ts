@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://localhost:56643/api'
+  apiUrl: 'http://apitest-env.eba-jpcvrp27.us-east-2.elasticbeanstalk.com/api'
 };
