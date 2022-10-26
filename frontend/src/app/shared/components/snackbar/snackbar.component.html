@@ -2,7 +2,6 @@
     <div>
         <mat-icon>{{getIcon}}</mat-icon>
     </div>
-    <div>
-        <span>{{data.message}}</span>
+    <div [innerHTML]="data.message">
     </div>
 </div>

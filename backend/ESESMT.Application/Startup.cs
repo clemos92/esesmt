@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 
 namespace ESESMT.Application
 {
@@ -25,7 +26,7 @@ namespace ESESMT.Application
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHealthChecks();
-
+   
             var mvcBuilder = services.AddMvc(options =>
             {
                 options.EnableEndpointRouting = false;
@@ -41,6 +42,10 @@ namespace ESESMT.Application
             mvcBuilder.AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver()
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                };
             });
 
             //To avoid the MultiPartBodyLength error

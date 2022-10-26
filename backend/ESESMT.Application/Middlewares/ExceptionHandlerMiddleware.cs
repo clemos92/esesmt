@@ -1,5 +1,7 @@
 ﻿using ESESMT.Infra.Shared.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -10,12 +12,15 @@ namespace ESESMT.Application.Middlewares
     public class ExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
         private IApplicationLogger ApplicationLogger { get; }
 
         public ExceptionHandlerMiddleware(RequestDelegate next,
+            IOptions<MvcNewtonsoftJsonOptions> mvcJsonOptions,
             IApplicationLogger applicationLogger)
         {
             _next = next;
+            _jsonSerializerSettings = mvcJsonOptions.Value.SerializerSettings;
             ApplicationLogger = applicationLogger ??
                 throw new ArgumentNullException(nameof(applicationLogger));
         }
@@ -45,7 +50,8 @@ namespace ESESMT.Application.Middlewares
                     Status = response.StatusCode,
                     Message = message,
                     Exception = exception
-                }));
+                }, 
+                _jsonSerializerSettings));
         }
     }
 }

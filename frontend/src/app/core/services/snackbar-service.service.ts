@@ -17,8 +17,22 @@ export class SnackbarServiceService {
       duration: 3000,
       horizontalPosition: 'center',
       verticalPosition: 'bottom',
-      data: { message: message, snackType: _snackType }
+      data: { message: message, snackType: _snackType },      
+      panelClass: this.getClass(_snackType)
     });
+  }
+
+  getClass(snackType: SnackType) {
+    switch (snackType) {
+      case SnackType.Success:
+        return 'done';
+      case SnackType.Error:
+        return 'error';
+      case SnackType.Warn:
+        return 'warning';
+      case SnackType.Info:
+        return 'info';
+    }
   }
 
 }
