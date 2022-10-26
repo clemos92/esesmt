@@ -25,7 +25,7 @@ export class SnackbarServiceService {
   getClass(snackType: SnackType) {
     switch (snackType) {
       case SnackType.Success:
-        return 'done';
+        return 'success';
       case SnackType.Error:
         return 'error';
       case SnackType.Warn:
