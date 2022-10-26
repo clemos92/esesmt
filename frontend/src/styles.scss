@@ -120,3 +120,8 @@ form > button{
     color: #059;
     background-color: #BEF;   
 }
+
+.mat-input-element:disabled, 
+.mat-select-disabled .mat-select-value {
+    color: inherit !important;
+}

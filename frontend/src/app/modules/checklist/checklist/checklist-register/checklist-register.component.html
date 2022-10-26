@@ -29,8 +29,8 @@
                 </mat-form-field>
             </div>
         </div>
-        <mat-form-field style="width: 150px;" *ngIf="this.data.action == 'details'">
-            <mat-label>Criado em</mat-label>
+        <mat-form-field style="width: 150px; margin-top: 10px;" *ngIf="this.data.action == 'details'">
+            <mat-label>Data de criação</mat-label>
             <input matInput type="datetime-local" formControlName="creationDate">
         </mat-form-field>
     </div>
