@@ -24,6 +24,8 @@ namespace ESESMT.Application
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHealthChecks();
+
             var mvcBuilder = services.AddMvc(options =>
             {
                 options.EnableEndpointRouting = false;
@@ -57,6 +59,13 @@ namespace ESESMT.Application
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHealthChecks("/");
+            });
+
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             this.UseCors(app);
