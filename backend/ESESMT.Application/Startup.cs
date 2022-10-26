@@ -61,11 +61,6 @@ namespace ESESMT.Application
         {
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapHealthChecks("/");
-            });
-
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             this.UseCors(app);
@@ -80,6 +75,11 @@ namespace ESESMT.Application
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHealthChecks("/");
+            });
         }
 
         #region Private Methods
