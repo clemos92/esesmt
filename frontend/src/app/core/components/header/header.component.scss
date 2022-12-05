@@ -4,9 +4,18 @@ ul li {
 
 .mat-h1 {
     margin: 0 !important;
+    font-size: 4.5vmin;
+    font-weight: normal;
+    line-height: 48px;
+    font-family: myriad;
+    // font: 500 32px/48px myriad;
 }
 
 .mat-toolbar.mat-primary {
     background: white;
     color: #007e7a;
+}
+
+svg {
+    width: 100%;
 }

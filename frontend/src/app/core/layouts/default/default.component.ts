@@ -5,6 +5,8 @@ import { delay } from 'rxjs/operators';
 import { Menu } from '../../interfaces/menu';
 import { LoadingService } from '../../services/loading.service';
 import { MenuService } from '../../services/menu.service';
+import { OnlineOfflineService } from '../../services/online-offline.service';
+import { UpdateService } from '../../services/update.service';
 
 @Component({
   selector: 'app-default',
@@ -15,14 +17,18 @@ export class DefaultComponent implements OnInit {
 
   navigation: Array<Menu> = [] 
   title = 'Sistema de Gestão e Controle do SESMT';
-
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'indeterminate';
   value = 50;
-
   loading: boolean = false;
-
-  constructor(public loadingService: LoadingService, private menuService: MenuService) {}
+  
+  constructor(public loadingService: LoadingService, 
+    private menuService: MenuService, 
+    private updateService: UpdateService, 
+    private onlineOfflineService: OnlineOfflineService) 
+  {
+    this.updateService.checkForUpdates();
+  }
 
   ngOnInit(): void {
     this.listenToLoading();
@@ -35,5 +41,9 @@ export class DefaultComponent implements OnInit {
       .subscribe((loading) => {
         this.loading = loading;
       });
+  }
+
+  get isOnline(){
+    return this.onlineOfflineService.isOnline;
   }
 }

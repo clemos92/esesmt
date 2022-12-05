@@ -12,13 +12,14 @@ import { DropdownDefault } from '../models/dropdown-default';
 export class ChecklistService {
 
     private base: string = `${environment.apiUrl}/Checklist`;
+    private db: any;
 
-    constructor(protected http: HttpClient) { }
-    
+    constructor(protected http: HttpClient){ }
+
     getPagedByFilter(filter: ChecklistFilter): Observable<PagedReponse<Checklist>> {
         return this.http.post<PagedReponse<Checklist>>(`${this.base}/GetPagedByFilter`, filter);
     }
-    
+
     getDetails(id: number): Observable<Checklist> {
         return this.http.get<Checklist>(`${this.base}/GetDetails/${id}`);
     }
@@ -30,7 +31,7 @@ export class ChecklistService {
     edit(entity: Checklist): Observable<Checklist> {
         return this.http.post<Checklist>(`${this.base}/Update`, entity);
     }
-    
+
     getAllActiveToDropdown() {
         return this.http.get<DropdownDefault[]>(`${this.base}/GetAllActive`);
     }

@@ -7,6 +7,8 @@ import { CoreModule } from './core/core.module';
 import { ModulesModule } from './modules/modules.module';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 registerLocaleData(localePt);
 
@@ -19,7 +21,13 @@ registerLocaleData(localePt);
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
-    ModulesModule
+    ModulesModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [{provide: LOCALE_ID, useValue: 'pt-BR'}],
   bootstrap: [AppComponent],

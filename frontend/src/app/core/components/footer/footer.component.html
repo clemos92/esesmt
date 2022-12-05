@@ -1,4 +1,11 @@
 <mat-divider></mat-divider>
 <mat-toolbar>
-    <p>Copyright © 2021 - Todos os direitos reservados</p>
+    <p class="pull-left">Copyright © 2021 - Todos os direitos reservados</p>
+    <p class="pull-right">
+        Status: 
+        <b>
+            <span class="online" *ngIf="isOnline">Online</span>
+            <span class="offline" *ngIf="!isOnline">Offline</span>
+        </b>
+    </p>
 </mat-toolbar>

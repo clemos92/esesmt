@@ -6,7 +6,7 @@ import { SnackType } from 'src/app/shared/components/snackbar/snackbar.component
 import { CompletedChecklistItem } from 'src/app/shared/models/completed-checklist-item';
 import { DropdownDefault } from 'src/app/shared/models/dropdown-default';
 import { ChecklistService } from 'src/app/shared/services/checklist.service';
-import { CompletedChecklistService } from 'src/app/shared/services/completed-checklist';
+import { CompletedChecklistService } from 'src/app/shared/services/completed-checklist.service';
 
 
 @Component({
@@ -151,7 +151,7 @@ export class ChecklistRegisterComponent implements OnInit {
   public onSave() {
     console.log(this.form.value);
     if(this.data.action == 'create'){
-      this.dataService.create(this.form.value).subscribe(data=>{
+      this.dataService.createSafe(this.form.value).subscribe(data=>{
         this.onSubmitCompletedWithSuccess(data);
       });
     }

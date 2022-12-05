@@ -2,14 +2,17 @@
     <mat-progress-spinner class="spinner" [color]="color" [mode]="mode" [value]="value">
     </mat-progress-spinner>
 </div>
-
-<div class="mat-elevation-z3" style="z-index: 2;">
-    <app-header [navigation]="navigation" [title]="title"></app-header>
-</div>
-
-<mat-drawer-container>
-    <mat-drawer-content>
-        <router-outlet></router-outlet>
-        <p style="height: 20px;">&nbsp;</p>
-    </mat-drawer-content>
-</mat-drawer-container>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+        <app-sidenav-list [navigation]="navigation" (sidenavClose)="sidenav.close()"></app-sidenav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="mat-elevation-z3" style="z-index: 2;">
+            <app-header [navigation]="navigation" (sidenavToggle)="sidenav.toggle()" [title]="title"></app-header>
+        </div>
+        <main>
+            <router-outlet></router-outlet>
+        </main>
+        <app-footer [isOnline]="isOnline"></app-footer>
+    </mat-sidenav-content>
+</mat-sidenav-container>

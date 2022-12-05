@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CompletedChecklist } from 'src/app/shared/models/completed-checklist';
 import { DropdownDefault } from 'src/app/shared/models/dropdown-default';
 import { ChecklistTypeService } from 'src/app/shared/services/checklist-type.service';
-import { CompletedChecklistService } from 'src/app/shared/services/completed-checklist';
+import { CompletedChecklistService } from 'src/app/shared/services/completed-checklist.service';
 import { ChecklistRegisterComponent } from '../checklist-register/checklist-register.component';
 
 @Component({
@@ -103,8 +103,8 @@ export class ChecklistListComponent implements OnInit {
       startDate: this.f.startDate.value,
       endDate: this.f.endDate.value,
       sortDirection: this.sort?.direction,
-      pageIndex: this.paginator?.pageIndex,
-      pageSize: this.paginator?.pageSize,
+      pageIndex: this.paginator?.pageIndex ?? this.pageIndex,
+      pageSize: this.paginator?.pageSize ?? this.pageSize,
       sortBy: this.sort?.active ?? ''
     }
 

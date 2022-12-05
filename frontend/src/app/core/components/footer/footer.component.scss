@@ -6,3 +6,9 @@ mat-toolbar {
 .mat-toolbar p {
     margin: 0;
 }
+
+.pull-left{float:left; width: 50%;}
+.pull-right{float:right; width: 50%; text-align: right;}
+
+.online {color: green;}
+.offline {color: red;}

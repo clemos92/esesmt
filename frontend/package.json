@@ -20,10 +20,13 @@
     "@angular/platform-browser": "~11.2.14",
     "@angular/platform-browser-dynamic": "~11.2.14",
     "@angular/router": "~11.2.14",
+    "@angular/service-worker": "~11.2.14",
+    "dexie": "^3.2.2",
     "highcharts-angular": "^2.10.0",
     "ng2-currency-mask": "^11.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
+    "uuid": "^9.0.0",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {
