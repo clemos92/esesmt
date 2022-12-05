@@ -30,7 +30,11 @@
   "dataGroups": [
     {
       "name": "esesmt API",
-      "urls": ["http://localhost:49153/api/CompletedChecklist/**"],
+      "urls": [
+        "http://apitest-env.eba-jpcvrp27.us-east-2.elasticbeanstalk.com/api/CompletedChecklist/**", 
+        "http://http://apitest-env.eba-jpcvrp27.us-east-2.elasticbeanstalk.com/api/Checklist/**",
+        "http://http://apitest-env.eba-jpcvrp27.us-east-2.elasticbeanstalk.com/api/ChecklistType/**"
+      ],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 100,

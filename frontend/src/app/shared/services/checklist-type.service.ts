@@ -16,7 +16,16 @@ export class ChecklistTypeService  {
     constructor(protected http: HttpClient) { }
     
     getPagedByFilter(filter: ChecklistTypeFilter): Observable<PagedReponse<ChecklistType>> {
-        return this.http.post<PagedReponse<ChecklistType>>(`${this.base}/GetPagedByFilter`, filter);
+        let queryParameters: string = '?';
+
+        const properties = Object.keys(filter);
+        properties.forEach(element => {
+            if ((filter[element] !== '' && filter[element] !== null && filter[element] !== undefined) || filter[element] === 0) {
+                queryParameters +=`${queryParameters.length > 1 ? '&' : ''}${element}=${filter[element]}`;    
+            }
+        });
+
+        return this.http.get<PagedReponse<ChecklistType>>(`${this.base}/GetPagedByFilter${queryParameters}`);
     }
     
     getDetails(id: number): Observable<ChecklistType> {

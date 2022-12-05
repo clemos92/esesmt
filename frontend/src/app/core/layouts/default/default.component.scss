@@ -6,10 +6,9 @@ mat-sidenav {
 }
 main {
     padding: 10px;
-    height: 100%;
-    height: -webkit-calc(100% - 130px);
-    height: -moz-calc(100% - 130px);
-    height: calc(100% - 130px);
+    min-height: -webkit-calc(100% - 130px);
+    min-height: -moz-calc(100% - 130px);
+    min-height: calc(100% - 130px);
 }
 
 .loading-container {
@@ -21,8 +20,8 @@ main {
 }
 
 .spinner {
-    top: 50%;
-    left: 50%;
+    margin: 0 auto;
+    top: calc(50% - 50px);
 }
 
 @import '~@angular/material/theming';

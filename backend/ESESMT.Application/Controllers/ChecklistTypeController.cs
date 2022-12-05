@@ -36,8 +36,8 @@ namespace ESESMT.Application.Controllers
             return Ok(checklistTypes);
         }
 
-        [HttpPost(nameof(GetPagedByFilter))]
-        public IActionResult GetPagedByFilter([FromBody] ChecklistTypeFilter filter)
+        [HttpGet(nameof(GetPagedByFilter))]
+        public IActionResult GetPagedByFilter([FromQuery] ChecklistTypeFilter filter)
         {
             var resultPaged = _service.GetPagedByFilter(filter);
             return Ok(resultPaged);
